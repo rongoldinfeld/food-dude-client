@@ -18,6 +18,8 @@
 .env.test.local
 .env.production.local
 
+# ignored until issue https://github.com/facebook/create-react-app/issues/6560 is fixed
+/src/react-app-env.d.ts
 
 # webstorm
 /.idea
