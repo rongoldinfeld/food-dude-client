@@ -5,6 +5,7 @@
     "prettier": true,
     "interface-name": false,
     "jsx-no-lambda": false,
-    "semicolon": [true, "always"]
+    "semicolon": [true, "always"],
+    "jsx-boolean-value": "false"
   }
 }

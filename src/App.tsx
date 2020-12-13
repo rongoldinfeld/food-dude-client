@@ -1,12 +1,16 @@
 import React from 'react';
-import { Route, Redirect, Switch } from 'react-router-dom';
-import RestaurantsFeed from './restaurants-feed/restaurants-feed';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import Login from './login/login';
 import Restaurant from './restaurant/restaurant';
+import RestaurantsFeed from './restaurants-feed/restaurants-feed';
 
 export default function App() {
   return (
     <div>
       <Switch>
+        <Route path={`/login`}>
+          <Login />
+        </Route>
         <Route path={`/restaurants/:id`}>
           <Restaurant />
         </Route>
