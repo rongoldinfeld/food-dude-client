@@ -1,4 +1,4 @@
-import { Restaurant } from '../models/restaurant.model'
+import { Restaurant } from '../models/restaurant.model';
 
 const feedMock: Restaurant[] = [
   {
@@ -61,6 +61,6 @@ const feedMock: Restaurant[] = [
     img: 'path/to/image',
     name: 'best restaurant 3',
   },
-]
+];
 
-export default feedMock
+export default feedMock;

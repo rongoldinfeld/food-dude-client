@@ -1,8 +1,8 @@
-import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import GridList from '@material-ui/core/GridList'
-import feedMock from './feed-mock'
-import RestaurantFeedItem from './restaurant-feed-item/restaurant-feed-item'
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import GridList from '@material-ui/core/GridList';
+import feedMock from './restaurants-mock';
+import RestaurantFeedItem from './restaurant-feed-item/restaurant-feed-item';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -12,10 +12,10 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'hidden',
     backgroundColor: theme.palette.background.paper,
   },
-}))
+}));
 
 export default function RestaurantsFeed() {
-  const classes = useStyles()
+  const classes = useStyles();
 
   return (
     <div className={classes.root}>
@@ -25,5 +25,5 @@ export default function RestaurantsFeed() {
         ))}
       </GridList>
     </div>
-  )
+  );
 }

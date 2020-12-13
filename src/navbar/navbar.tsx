@@ -1,9 +1,9 @@
-import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,10 +14,10 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: 'none',
     color: '#f5deb3',
   },
-}))
+}));
 
 export default function Navbar() {
-  const classes = useStyles()
+  const classes = useStyles();
 
   return (
     <div className={classes.root}>
@@ -29,5 +29,5 @@ export default function Navbar() {
         </Toolbar>
       </AppBar>
     </div>
-  )
+  );
 }

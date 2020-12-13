@@ -1,5 +1,7 @@
-import React from 'react'
+import React from 'react';
+import { useParams } from 'react-router-dom';
 
 export default function Resturant() {
-  return <h2>Hello Guys</h2>
+  const { id } = useParams<{ id: string }>();
+  return <h2>Restaurant with id {id} was chosen</h2>;
 }
