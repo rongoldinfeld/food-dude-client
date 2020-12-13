@@ -5,7 +5,7 @@ import IconButton from '@material-ui/core/IconButton'
 import InfoIcon from '@material-ui/icons/Info'
 import { Restaurant } from '../../models/restaurant.model'
 import { makeStyles } from '@material-ui/core'
-import { useHistory, useRouteMatch } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles(() => ({
   icon: {
