@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
-import feedMock from './restaurants-mock';
+import restaurantMocks from './restaurants-mock';
 import RestaurantFeedItem from './restaurant-feed-item/restaurant-feed-item';
 
 const useStyles = makeStyles((theme) => ({
@@ -20,7 +20,7 @@ export default function RestaurantsFeed() {
   return (
     <div className={classes.root}>
       <GridList cellHeight={180} cols={4}>
-        {feedMock.map((restaurant) => (
+        {restaurantMocks.map((restaurant) => (
           <RestaurantFeedItem key={restaurant.id} restaurant={restaurant} />
         ))}
       </GridList>
