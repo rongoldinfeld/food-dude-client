@@ -9,12 +9,16 @@ const restaurantMocks: Restaurant[] = [
       {
         id: '23',
         name: 'Omer',
-        data: 'This restaurant was great!',
+        brief: 'This restaurant was great!',
+        description:
+          'Everything was great!!!! Everything was great!!!! Everything was great!!!! Everything was great!!!! Everything was great!!!! ',
       },
       {
         id: '2',
         name: 'Ron',
-        data: 'I really enjoyed this restaurant!',
+        brief: 'I really enjoyed this restaurant!',
+        description:
+          'Everything was great!!!! Everything was great!!!! Everything was great!!!! Everything was great!!!! Everything was great!!!! ',
       },
     ],
   },
@@ -26,7 +30,9 @@ const restaurantMocks: Restaurant[] = [
       {
         id: '345o982',
         name: 'Tom',
-        data: 'I Recommand this place',
+        brief: 'I Recommand this place',
+        description:
+          'Everything was great!!!! Everything was great!!!! Everything was great!!!! Everything was great!!!! Everything was great!!!! ',
       },
     ],
   },

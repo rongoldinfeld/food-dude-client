@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import restaurantMocks from '../restaurants-feed/restaurants-mock';
+import CommentsList from './comments-list/comments-list';
 
 export default function Resturant() {
   const { id } = useParams<{ id: string }>();
@@ -10,11 +11,11 @@ export default function Resturant() {
     <div>
       <h2>Restaurant with id {id} was chosen</h2>
       <h2>Comments about the restaurant</h2>
-      {resturant.comments?.map((comment) => (
-        <h3 key={comment.id}>
-          {comment.name} said: {comment.data}
-        </h3>
-      ))}
+      {resturant.comments ? (
+        <CommentsList comments={resturant.comments} />
+      ) : (
+        <h2>This restaurant does not contain comments</h2>
+      )}
     </div>
   ) : (
     <h1>No restaurant was found with id {id}</h1>
