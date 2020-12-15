@@ -3,4 +3,5 @@ export interface Comment {
   name: string;
   brief: string;
   description: string;
+  date: string;
 }

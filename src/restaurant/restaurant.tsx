@@ -10,7 +10,6 @@ export default function Resturant() {
   return resturant ? (
     <div>
       <h2>Restaurant with id {id} was chosen</h2>
-      <h2>Comments about the restaurant</h2>
       {resturant.comments ? (
         <CommentsList comments={resturant.comments} />
       ) : (
