@@ -37,8 +37,8 @@ function CommentsList({ comments }: { comments: Comment[] }) {
         <List className={classes.root}>
           {comments.map((comment, index) =>
             index !== lastIndex ? (
-              <div>
-                <CommentItem key={comment.id} comment={comment} />
+              <div key={comment.id}>
+                <CommentItem comment={comment} />
                 <Divider variant="middle" component="li" />
               </div>
             ) : (

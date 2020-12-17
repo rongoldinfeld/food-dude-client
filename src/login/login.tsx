@@ -43,7 +43,7 @@ export default function Login() {
   const { register, handleSubmit, errors } = useForm();
 
   const onSubmit = (data: { email: string; password: string }) => {
-    authContext.login({ email: data.email });
+    authContext.login(data);
     history.push('/restaurants');
   };
 
