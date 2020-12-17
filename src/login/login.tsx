@@ -1,17 +1,15 @@
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import React, { ChangeEvent, useState } from 'react';
-import { validateEmail } from '../shared/validators/form-validators';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -24,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
+  errorMessage: {
+    color: 'red',
+  },
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
@@ -35,35 +36,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
   const classes = useStyles();
-  const [formValue, setFormValue] = useState({
-    email: { value: '', error: '' },
-    password: { value: '', error: '' },
-  });
+  const { register, handleSubmit, errors } = useForm();
 
-  const isFormValid = (): boolean =>
-    formValue.email.error.length === 0 && formValue.password.error.length === 0;
+  const onSubmit = (data: any) => console.log(data);
 
-  const handleEmailChange = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    const inputValue = event.target.value;
-    setFormValue({
-      ...formValue,
-      email: {
-        value: inputValue,
-        error: validateEmail(inputValue) ? '' : 'Email input is incorrect',
-      },
-    });
-  };
-  const handlePasswordChange = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    const inputValue = event.target.value;
-    setFormValue({
-      ...formValue,
-      password: {
-        value: inputValue,
-        error: inputValue.length > 0 ? '' : 'Password field is required',
-      },
-    });
-  };
-  const handleFormSubmit = () => alert(`Sending form with value ${JSON.stringify(formValue)}`);
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -74,45 +50,64 @@ export default function Login() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} onSubmit={handleFormSubmit}>
+        <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
           <TextField
-            onChange={handleEmailChange}
             variant="outlined"
             margin="normal"
-            fullWidth
-            value={formValue.email.value}
-            error={!!formValue.email.error}
-            helperText={formValue.email.error}
+            fullWidth={true}
             id="email"
             label="Email Address"
             name="email"
             autoComplete="email"
-            autoFocus
-            required
+            autoFocus={true}
+            inputRef={register({
+              required: {
+                value: true,
+                message: 'Please enter your email address',
+              },
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                message: 'Enter a valid email address',
+              },
+              minLength: {
+                value: 6,
+                message: 'Minimum 6 characters are allowed',
+              },
+              maxLength: {
+                value: 255,
+                message: 'Maximum 255 characters are allowed',
+              },
+            })}
           />
+          {errors.email && (
+            <div className={`${classes.errorMessage} mandatory`}>{errors.email.message}</div>
+          )}
           <TextField
             variant="outlined"
             margin="normal"
-            error={!!formValue.password.error}
-            helperText={formValue.password.error}
-            onChange={handlePasswordChange}
-            fullWidth
+            fullWidth={true}
             name="password"
-            value={formValue.password.value}
             label="Password"
             type="password"
             id="password"
-            required
             autoComplete="current-password"
+            inputRef={register({
+              required: {
+                value: true,
+                message: 'Password field is required',
+              },
+              minLength: {
+                value: 5,
+                message: 'Password field has minimum of 5 charachters',
+              },
+            })}
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
+          {errors.password && (
+            <div className={`${classes.errorMessage} mandatory`}>{errors.password.message}</div>
+          )}
           <Button
-            disabled={!isFormValid()}
             type="submit"
-            fullWidth
+            fullWidth={true}
             variant="contained"
             color="primary"
             className={classes.submit}
