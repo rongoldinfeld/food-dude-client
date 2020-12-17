@@ -5,8 +5,9 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/SearchOutlined';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { UserContext } from '../providers/user-provider';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -59,7 +60,11 @@ const useStyles = makeStyles((theme) => ({
 export default function Navbar() {
   const classes = useStyles();
   const history = useHistory();
-  const handleOnLoginClick = () => history.push('/login');
+  const authContext = useContext(UserContext);
+  const handleOnLogin = () => history.push('/login');
+  const handleLogout = () => {
+    authContext.logout();
+  };
 
   return (
     <div className={classes.root}>
@@ -81,9 +86,18 @@ export default function Navbar() {
               inputProps={{ 'aria-label': 'search' }}
             />
           </div>
-          <Button onClick={handleOnLoginClick} color="inherit">
-            Login
-          </Button>
+          {authContext.user ? (
+            <div>
+              <Typography>Hey there {authContext.user.email}</Typography>
+              <Link to="/restaurants" onClick={handleLogout}>
+                Logout
+              </Link>
+            </div>
+          ) : (
+            <Button onClick={handleOnLogin} color="inherit">
+              Login
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
     </div>

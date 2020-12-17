@@ -3,5 +3,6 @@ export interface Restaurant {
   id: string;
   name: string;
   img: string;
-  comments?: Comment[];
+  comments: Comment[];
+  commentsDisabled: boolean;
 }

@@ -8,8 +8,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
+import { UserContext } from '../providers/user-provider';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -36,9 +38,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
   const classes = useStyles();
+  const authContext = useContext(UserContext);
+  const history = useHistory();
   const { register, handleSubmit, errors } = useForm();
 
-  const onSubmit = (data: any) => console.log(data);
+  const onSubmit = (data: { email: string; password: string }) => {
+    authContext.login({ email: data.email });
+    history.push('/restaurants');
+  };
 
   return (
     <Container component="main" maxWidth="xs">

@@ -5,6 +5,7 @@ const restaurantMocks: Restaurant[] = [
     id: 'asd',
     img: 'path/to/image',
     name: 'best restaurant 1',
+    commentsDisabled: false,
     comments: [
       {
         id: '23',
@@ -28,6 +29,7 @@ const restaurantMocks: Restaurant[] = [
     id: 'asdsd',
     img: 'path/to/image',
     name: 'best restaurant 2',
+    commentsDisabled: true,
     comments: [
       {
         id: '345o982',
@@ -43,11 +45,15 @@ const restaurantMocks: Restaurant[] = [
     id: 'asdasda',
     img: 'path/to/image',
     name: 'best restaurant 3',
+    commentsDisabled: false,
+    comments: [],
   },
   {
     id: 'asxcvd',
     img: 'path/to/image',
     name: 'best restaurant 1',
+    commentsDisabled: false,
+    comments: [],
   },
 ];
 
