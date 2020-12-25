@@ -1,4 +1,12 @@
 import React, { createContext, useState } from 'react';
+import {
+  clearLocalStoraage as clearLocalStorage,
+  getTokenAndExpiery,
+  getUserByToken,
+  isLocalStorageTokenValid,
+  setTokenAndExpiery,
+} from '../auth/token-utils';
+import history from '../history';
 import { User } from '../models/user.model';
 import { unauthorizedApi } from '../shared/utils/http-client';
 
@@ -15,16 +23,27 @@ export const UserContext = createContext<UserContextProvider>({
 });
 
 export default function UserProvider(props: any) {
-  const [state, setState] = useState<{ user: User | null }>({ user: null });
+  const [state, setState] = useState<{ user: User | null }>(() => {
+    if (!isLocalStorageTokenValid()) {
+      return { user: null };
+    }
 
-  const logout = () => setState({ user: null });
+    return { user: getUserByToken(getTokenAndExpiery().token!) };
+  });
+
+  const logout = () => {
+    clearLocalStorage();
+    setState({ user: null });
+    history.push('/login');
+  };
   const login = async ({ email, password }: { email: string; password: string }) => {
     try {
-      const response = await unauthorizedApi.post('/auth/login', { email, password });
-      console.log('You signed in, response', response);
+      const tokenReponse = await unauthorizedApi.post('/auth/login', { email, password });
+      const user = await getUserByToken(tokenReponse.data);
+      setState({ user });
+      setTokenAndExpiery(tokenReponse.data);
       return true;
     } catch (e) {
-      console.error(e);
       return false;
     }
   };

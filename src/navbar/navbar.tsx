@@ -88,7 +88,9 @@ export default function Navbar() {
           </div>
           {authContext.user ? (
             <div>
-              <Typography>Hey there {authContext.user.email}</Typography>
+              <Typography>
+                Hey there {`${authContext.user.firstName} ${authContext.user.lastName}`}
+              </Typography>
               <Link to="/restaurants" onClick={handleLogout}>
                 Logout
               </Link>

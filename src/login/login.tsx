@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { UserContext } from '../providers/user-provider';
@@ -42,8 +42,14 @@ export default function Login() {
   const history = useHistory();
   const { register, handleSubmit, errors } = useForm();
 
-  const onSubmit = (data: { email: string; password: string }) => {
-    authContext.login(data);
+  useEffect(() => {
+    if (!!authContext.user) {
+      history.push('/restaurants');
+    }
+  });
+
+  const onSubmit = async (data: { email: string; password: string }) => {
+    await authContext.login(data);
     history.push('/restaurants');
   };
 

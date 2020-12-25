@@ -1,8 +1,15 @@
-import { Comment } from './comment.model';
+import { Review } from './review.model';
 export interface Restaurant {
-  id: string;
+  _id: string;
   name: string;
-  img: string;
-  comments: Comment[];
-  commentsDisabled: boolean;
+  description: string;
+  rating: number;
+  imageUrl: string;
+  address: {
+    city: string;
+    street: string;
+    houseNumber: number;
+  };
+  category: string;
+  reviews: Review[];
 }

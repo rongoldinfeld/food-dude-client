@@ -6,10 +6,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import moment from 'moment';
 import React from 'react';
-import { Comment } from '../../../models/comment.model';
+import { Review } from '../../../models/review.model';
 import { longDateFormat } from '../../../shared/utils/date-formats';
 
-export default function CommentItem({ comment }: { comment: Comment }) {
+export default function ReviewItem({ review }: { review: Review }) {
   const useStyles = makeStyles(() => ({
     inline: {
       display: 'inline',
@@ -22,32 +22,20 @@ export default function CommentItem({ comment }: { comment: Comment }) {
   return (
     <ListItem alignItems="flex-start">
       <ListItemAvatar>
-        <Avatar>{comment.name.slice(0, 1)}</Avatar>
+        <Avatar>{review.user.slice(0, 1)}</Avatar>
       </ListItemAvatar>
       <ListItemText
         primary={
           <React.Fragment>
             <Typography component="span" color="textPrimary">
-              {`${comment.name} - `}
+              {`${review.user} - `}
             </Typography>
             <Typography component="span" color="textSecondary">
-              {moment(comment.date).format(longDateFormat)}
+              {moment(review.createdAt).format(longDateFormat)}
             </Typography>
           </React.Fragment>
         }
-        secondary={
-          <React.Fragment>
-            <Typography
-              component="span"
-              variant="body2"
-              className={classes.inline}
-              color="textPrimary"
-            >
-              {comment.brief + '...'}
-            </Typography>
-            {' - ' + comment.description}
-          </React.Fragment>
-        }
+        secondary={review.content}
       />
     </ListItem>
   );
