@@ -37,6 +37,7 @@ export default function Resturant() {
   const [{ data, isLoading, isError, setData }] = useFetch<Restaurant>({
     initialData: {} as Restaurant,
     request: fetchRestaurant,
+    effectDeps: [id],
   });
 
   const addReview = (review: Review) => setData({ ...data, reviews: [...data.reviews, review] });

@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'inline',
     },
     card: {
-      width: '75%',
+      width: '100%',
       maxHeight: '325px',
       overflowY: 'scroll',
     },

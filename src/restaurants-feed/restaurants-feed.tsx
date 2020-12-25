@@ -1,8 +1,10 @@
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import React, { useEffect, useState } from 'react';
+import { Alert, AlertTitle } from '@material-ui/lab';
+import React from 'react';
 import { Restaurant } from '../models/restaurant.model';
+import { useFetch } from '../shared/utils/fetch-hook';
 import { apiInstance } from '../shared/utils/http-client';
 import RestaurantFeedItem from './restaurant-feed-item/restaurant-feed-item';
 
@@ -18,25 +20,29 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RestaurantsFeed() {
   const classes = useStyles();
-  const [restaurants, setRestaurants] = useState<{ isLoading: boolean; data: Restaurant[] }>({
-    isLoading: true,
-    data: [],
-  });
 
-  useEffect(() => {
-    apiInstance
-      .get('/restaurants')
-      .then((response) => setRestaurants({ data: response.data, isLoading: false }))
-      .catch((err) => alert(err));
-  }, []);
+  const fetchRestaurants = async (): Promise<Restaurant[]> => {
+    const response = await apiInstance.get('/restaurants');
+    return response.data;
+  };
+
+  const [{ data, isLoading, isError }] = useFetch<Restaurant[]>({
+    initialData: [],
+    request: fetchRestaurants,
+  });
 
   return (
     <div className={classes.root}>
-      {restaurants.isLoading ? (
+      {isLoading ? (
         <CircularProgress />
+      ) : isError ? (
+        <Alert severity="warning">
+          <AlertTitle>אזהרה</AlertTitle>
+          לא הצלחנו לטעון את רשימת המסעדות
+        </Alert>
       ) : (
-        <Grid container spacing={2}>
-          {restaurants.data.map((restaurant) => (
+        <Grid container spacing={0}>
+          {data.map((restaurant) => (
             <RestaurantFeedItem key={restaurant._id} restaurant={restaurant} />
           ))}
         </Grid>
