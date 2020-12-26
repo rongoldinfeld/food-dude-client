@@ -6,15 +6,16 @@ import React from 'react';
 import { Restaurant } from '../models/restaurant.model';
 import { useFetch } from '../shared/utils/fetch-hook';
 import { apiInstance } from '../shared/utils/http-client';
+import Filters from './filters/filters';
 import RestaurantFeedItem from './restaurant-feed-item/restaurant-feed-item';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  feed: {
+    width: '90%',
+    margin: '0 auto',
+  },
+  filters: {
     marginTop: '2%',
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'visible',
   },
 }));
 
@@ -23,7 +24,7 @@ export default function RestaurantsFeed() {
 
   const fetchRestaurants = async (): Promise<Restaurant[]> => {
     const response = await apiInstance.get('/restaurants');
-    return response.data;
+    return response.data.map((res: Restaurant) => ({ ...res, rating: res.rating / 2 }));
   };
 
   const [{ data, isLoading, isError }] = useFetch<Restaurant[]>({
@@ -32,7 +33,7 @@ export default function RestaurantsFeed() {
   });
 
   return (
-    <div className={classes.root}>
+    <div>
       {isLoading ? (
         <CircularProgress />
       ) : isError ? (
@@ -41,10 +42,15 @@ export default function RestaurantsFeed() {
           לא הצלחנו לטעון את רשימת המסעדות
         </Alert>
       ) : (
-        <Grid container spacing={0}>
-          {data.map((restaurant) => (
-            <RestaurantFeedItem key={restaurant._id} restaurant={restaurant} />
-          ))}
+        <Grid container direction="column" spacing={2} className={classes.feed}>
+          <Grid item className={classes.filters}>
+            <Filters />
+          </Grid>
+          <Grid item container spacing={0}>
+            {data.map((restaurant) => (
+              <RestaurantFeedItem key={restaurant._id} restaurant={restaurant} />
+            ))}
+          </Grid>
         </Grid>
       )}
     </div>
