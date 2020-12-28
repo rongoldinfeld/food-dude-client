@@ -11,7 +11,13 @@ interface Category {
   description: string;
 }
 
-export default function CategoryFilter() {
+export default function CategoryFilter({
+  onCategoryChange,
+  value,
+}: {
+  onCategoryChange: (category: string) => void;
+  value: string;
+}) {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState<Category[]>([]);
   const loading = open && options.length === 0;
@@ -54,7 +60,8 @@ export default function CategoryFilter() {
       onClose={() => {
         setOpen(false);
       }}
-      getOptionSelected={(option, value) => option.name === value.name}
+      onChange={(event, value) => onCategoryChange(value ? value.name : '')}
+      getOptionSelected={(option) => option.name === value}
       getOptionLabel={(option) => option.name}
       options={options}
       loading={loading}

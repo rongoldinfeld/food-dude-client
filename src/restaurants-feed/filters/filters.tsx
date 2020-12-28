@@ -1,11 +1,11 @@
-import { Button } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import React from 'react';
+import { FilterFields } from '../../models/filters.model';
 import AreaFilter from './area-filter';
 import CategoryFilter from './category-filter';
-import DescriptionFilter from './city-filter';
+import DescriptionFilter from './description-filter';
 import RatingFilter from './rating-filter';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -17,28 +17,38 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-export default function Filters() {
+export default function Filters({
+  value,
+  changeFilter,
+}: {
+  value: FilterFields;
+  changeFilter: (change: Partial<FilterFields>) => void;
+}) {
   const classes = useStyles();
 
   return (
     <Paper className={classes.root}>
       <Grid container spacing={3}>
         <Grid item xs={3}>
-          <CategoryFilter />
-        </Grid>
-        <Grid item xs={2}>
-          <AreaFilter />
+          <CategoryFilter
+            onCategoryChange={(category) => changeFilter({ category })}
+            value={value.category}
+          />
         </Grid>
         <Grid item xs={3}>
-          <DescriptionFilter />
+          <AreaFilter onAreaChange={(area) => changeFilter({ area })} value={value.area} />
         </Grid>
-        <Grid item xs={2}>
-          <RatingFilter />
+        <Grid item xs={3}>
+          <DescriptionFilter
+            onDescriptionChange={(description) => changeFilter({ description })}
+            value={value.description}
+          />
         </Grid>
-        <Grid item xs={2} direction="row" alignItems="center">
-          <Button variant="outlined" color="primary">
-            Filter
-          </Button>
+        <Grid container item xs={3} direction="row" justify="center" alignItems="center">
+          <RatingFilter
+            onRatingChange={(rating) => changeFilter({ minRating: rating })}
+            value={value.minRating}
+          />
         </Grid>
       </Grid>
     </Paper>

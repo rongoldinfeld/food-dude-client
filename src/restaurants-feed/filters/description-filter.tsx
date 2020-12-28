@@ -10,14 +10,22 @@ const useStyles = makeStyles(() =>
   })
 );
 
-export default function DescriptionFilter() {
+export default function DescriptionFilter({
+  onDescriptionChange,
+  value,
+}: {
+  onDescriptionChange: (description: string) => void;
+  value: string;
+}) {
   const classes = useStyles();
   return (
     <TextField
+      value={value}
       className={classes.textField}
       id="outlined-search"
       label="Description"
       type="search"
+      onChange={(event) => onDescriptionChange(event.target.value)}
       variant="outlined"
     />
   );

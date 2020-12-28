@@ -1,5 +1,5 @@
+import { Backdrop, Button, CircularProgress } from '@material-ui/core';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { UserContext } from '../providers/user-provider';
@@ -34,6 +34,10 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+  },
 }));
 
 export default function Login() {
@@ -41,6 +45,7 @@ export default function Login() {
   const authContext = useContext(UserContext);
   const history = useHistory();
   const { register, handleSubmit, errors } = useForm();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!!authContext.user) {
@@ -49,7 +54,9 @@ export default function Login() {
   });
 
   const onSubmit = async (data: { email: string; password: string }) => {
+    setLoading(true);
     await authContext.login(data);
+    setLoading(false);
     history.push('/restaurants');
   };
 
@@ -118,6 +125,9 @@ export default function Login() {
           {errors.password && (
             <div className={`${classes.errorMessage} mandatory`}>{errors.password.message}</div>
           )}
+          <Backdrop className={classes.backdrop} open={loading}>
+            <CircularProgress color="inherit" />
+          </Backdrop>
           <Button
             type="submit"
             fullWidth={true}

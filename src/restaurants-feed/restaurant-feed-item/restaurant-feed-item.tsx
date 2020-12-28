@@ -49,7 +49,7 @@ export default function RestaurantFeedItem(props: { restaurant: Restaurant }) {
                 {props.restaurant.description}
               </Typography>
               <Typography variant="body2" color="textSecondary">
-                <Rating name="read-only" value={props.restaurant.rating} readOnly />
+                <Rating size="small" name="read-only" value={props.restaurant.rating} readOnly />
               </Typography>
             </Grid>
             <Grid item>

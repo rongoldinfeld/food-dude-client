@@ -1,14 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export function useFetch<T>({
-  request,
-  initialData,
-  effectDeps,
-}: {
-  request: () => Promise<T>;
-  initialData: T;
-  effectDeps?: any[];
-}) {
+export function useFetch<T>({ request, initialData }: { request: any; initialData: T }) {
   const [data, setData] = useState<T>(initialData);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
@@ -34,7 +26,7 @@ export function useFetch<T>({
     return () => {
       active = false;
     };
-  }, effectDeps || []);
+  }, [request]);
 
   return [{ data, isLoading, isError, setData }];
 }

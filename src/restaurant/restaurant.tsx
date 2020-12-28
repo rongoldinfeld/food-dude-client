@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import Rating from '@material-ui/lab/Rating';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { Restaurant } from '../models/restaurant.model';
 import { Review } from '../models/review.model';
@@ -29,15 +29,18 @@ export default function Resturant() {
   const { id } = useParams<{ id: string }>();
   const classes = useStyles();
 
-  async function fetchRestaurant(): Promise<Restaurant> {
-    const response = await apiInstance.get(`/restaurants/search/${id}`);
+  async function fetchRestaurant(restaurantId: string): Promise<Restaurant> {
+    const response = await apiInstance.get(`/restaurants/search/${restaurantId}`);
     return response.data;
   }
 
+  const fetchRestaurantCallback = useCallback(async () => {
+    return await fetchRestaurant(id);
+  }, [id]);
+
   const [{ data, isLoading, isError, setData }] = useFetch<Restaurant>({
     initialData: {} as Restaurant,
-    request: fetchRestaurant,
-    effectDeps: [id],
+    request: fetchRestaurantCallback,
   });
 
   const addReview = (review: Review) => setData({ ...data, reviews: [...data.reviews, review] });

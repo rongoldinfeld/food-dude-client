@@ -1,32 +1,33 @@
 import Box from '@material-ui/core/Box';
 import Rating from '@material-ui/lab/Rating';
-import React from 'react';
+import React, { useState } from 'react';
 
 const labels: { [index: string]: string } = {
-  0.5: 'Useless',
-  1: 'Useless+',
-  1.5: 'Poor',
-  2: 'Poor+',
-  2.5: 'Ok',
-  3: 'Ok+',
-  3.5: 'Good',
-  4: 'Good+',
-  4.5: 'Excellent',
-  5: 'Excellent+',
+  0: 'Ugly',
+  1: 'Bad',
+  2: 'Fine',
+  3: 'Ok',
+  4: 'Good',
+  5: 'Super',
 };
 
-export default function RatingFilter() {
-  const [value, setValue] = React.useState<number | null>(2);
-  const [hover, setHover] = React.useState(-1);
+export default function RatingFilter({
+  onRatingChange,
+  value,
+}: {
+  onRatingChange: (rating: number) => void;
+  value: number;
+}) {
+  const [hover, setHover] = useState(-1);
 
   return (
     <div>
       <Rating
         name="hover-feedback"
         value={value}
-        precision={0.5}
+        precision={1}
         onChange={(event, newValue) => {
-          setValue(newValue);
+          onRatingChange(newValue!);
         }}
         onChangeActive={(event, newHover) => {
           setHover(newHover);
