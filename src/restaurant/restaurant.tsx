@@ -44,6 +44,11 @@ export default function Resturant() {
   });
 
   const addReview = (review: Review) => setData({ ...data, reviews: [...data.reviews, review] });
+  const editReview = (review: Review) =>
+    setData({
+      ...data,
+      reviews: data.reviews.map((element) => (element._id === review._id ? review : element)),
+    });
 
   return (
     <div className={classes.root}>
@@ -72,7 +77,7 @@ export default function Resturant() {
                 <Typography variant="body2" color="textSecondary">
                   <Rating name="read-only" value={data.rating} readOnly />
                 </Typography>
-                <ReviewsList reviews={data.reviews} addReview={addReview} />
+                <ReviewsList editReview={editReview} reviews={data.reviews} addReview={addReview} />
               </Grid>
             </Grid>
           </Grid>

@@ -29,9 +29,11 @@ const useStyles = makeStyles((theme: Theme) =>
 function ReviewsList({
   reviews,
   addReview,
+  editReview,
 }: {
   reviews: Review[];
   addReview: (review: Review) => void;
+  editReview: (review: Review) => void;
 }) {
   const classes = useStyles();
   const lastIndex = reviews.length - 1;
@@ -45,11 +47,11 @@ function ReviewsList({
           {reviews.map((review, index) =>
             index !== lastIndex ? (
               <div key={review._id}>
-                <ReviewItem review={review} />
+                <ReviewItem onEditSuccess={editReview} review={review} />
                 <Divider variant="middle" component="li" />
               </div>
             ) : (
-              <ReviewItem key={review._id} review={review} />
+              <ReviewItem onEditSuccess={editReview} key={review._id} review={review} />
             )
           )}
         </List>
