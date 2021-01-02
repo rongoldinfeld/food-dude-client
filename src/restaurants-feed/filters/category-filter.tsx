@@ -1,4 +1,5 @@
 // *https://www.registers.service.gov.uk/registers/country/use-the-api*
+import { Typography } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -65,6 +66,12 @@ export default function CategoryFilter({
       getOptionLabel={(option) => option.name}
       options={options}
       loading={loading}
+      renderOption={(option) => (
+        <div>
+          <Typography variant="body1">{option.name}</Typography>
+          <Typography variant="caption">{option.description}</Typography>
+        </div>
+      )}
       renderInput={(params) => (
         <TextField
           {...params}

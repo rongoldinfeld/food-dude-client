@@ -12,6 +12,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { UserContext } from '../providers/user-provider';
+import ErrorMessage from '../shared/utils/error-message';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -56,7 +57,6 @@ export default function Login() {
   const onSubmit = async (data: { email: string; password: string }) => {
     setLoading(true);
     await authContext.login(data);
-    setLoading(false);
     history.push('/restaurants');
   };
 
@@ -99,9 +99,7 @@ export default function Login() {
               },
             })}
           />
-          {errors.email && (
-            <div className={`${classes.errorMessage} mandatory`}>{errors.email.message}</div>
-          )}
+          <ErrorMessage errors={errors} name="email" />
           <TextField
             variant="outlined"
             margin="normal"
@@ -122,9 +120,7 @@ export default function Login() {
               },
             })}
           />
-          {errors.password && (
-            <div className={`${classes.errorMessage} mandatory`}>{errors.password.message}</div>
-          )}
+          <ErrorMessage errors={errors} name="password" />
           <Backdrop className={classes.backdrop} open={loading}>
             <CircularProgress color="inherit" />
           </Backdrop>
@@ -138,13 +134,9 @@ export default function Login() {
             Sign In
           </Button>
           <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
+            <Grid item xs></Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/register" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

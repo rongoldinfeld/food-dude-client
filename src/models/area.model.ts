@@ -6,8 +6,8 @@ export enum Areas {
 }
 
 export const areaToDisplayName: { [key in Areas]: string } = {
-  [Areas.Center]: 'מרכז',
-  [Areas.South]: 'דרום',
-  [Areas.North]: 'צפון',
-  [Areas.None]: 'כל הארץ',
+  [Areas.Center]: 'Center',
+  [Areas.South]: 'South',
+  [Areas.North]: 'North',
+  [Areas.None]: 'All',
 };

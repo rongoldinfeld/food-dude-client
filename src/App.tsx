@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import Login from './login/login';
+import Register from './register/register';
 import Restaurant from './restaurant/restaurant';
 import RestaurantsFeed from './restaurants-feed/restaurants-feed';
 import RouteAuthenticated from './shared/utils/auth-routes/authenticated-route';
@@ -11,6 +12,7 @@ export default function App() {
     <div>
       <Switch>
         <RouteUnauthenticated path={`/login`} component={Login} />
+        <RouteUnauthenticated path={`/register`} component={Register} />
         <RouteAuthenticated path={`/restaurants/:id`} component={Restaurant} />
         <RouteAuthenticated path="/restaurants" component={RestaurantsFeed} />
         <Route path="/" exact={true} render={() => <Redirect to={'/restaurants'} />} />
