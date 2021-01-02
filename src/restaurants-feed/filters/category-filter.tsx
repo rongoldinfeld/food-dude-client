@@ -1,4 +1,3 @@
-// *https://www.registers.service.gov.uk/registers/country/use-the-api*
 import { Typography } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import TextField from '@material-ui/core/TextField';
