@@ -63,6 +63,9 @@ export default function ReviewItem({
       display: 'inline',
       width: '100%',
     },
+    editIcon: {
+      cursor: 'pointer',
+    },
     modalGrid: {
       backgroundColor: '#FFFF',
       width: 'fit-content',
@@ -100,7 +103,7 @@ export default function ReviewItem({
             </Grid>
             <Grid item>
               {authContext.user && authContext.user._id === review.user && (
-                <Tooltip title="Edit your comment!">
+                <Tooltip title="Edit your comment!" className={classes.editIcon}>
                   <EditOutlinedIcon onClick={handleOpen} />
                 </Tooltip>
               )}

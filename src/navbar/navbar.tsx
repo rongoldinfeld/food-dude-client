@@ -16,6 +16,17 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     textDecoration: 'none',
     color: '#f5deb3',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  toolbar: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  img: {
+    width: '50px',
+    marginRight: '1%',
   },
 }));
 
@@ -31,8 +42,9 @@ export default function Navbar() {
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar className={classes.toolbar}>
           <Link to="/" className={classes.title}>
+            <img src={'/TFD-192x192.png'} className={classes.img} />
             <Typography variant="h6">Food Dude</Typography>
           </Link>
           <AutoCompleteSearchInput disabled={!authContext.user} />
