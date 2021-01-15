@@ -12,4 +12,5 @@ export interface Restaurant {
   };
   category: string;
   reviews: Review[];
+  reviewsBlocked: boolean;
 }

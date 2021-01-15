@@ -77,7 +77,7 @@ export default function Resturant() {
                 <Typography variant="body2" color="textSecondary">
                   <Rating name="read-only" value={data.rating} readOnly />
                 </Typography>
-                <ReviewsList editReview={editReview} reviews={data.reviews} addReview={addReview} />
+                <ReviewsList disabled={data.reviewsBlocked} editReview={editReview} reviews={data.reviews} addReview={addReview} />
               </Grid>
             </Grid>
           </Grid>

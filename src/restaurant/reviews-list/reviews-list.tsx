@@ -23,6 +23,13 @@ const useStyles = makeStyles((theme: Theme) =>
       maxHeight: '325px',
       overflowY: 'scroll',
     },
+    disabled: {
+      width: '100%',
+      maxHeight: '325px',
+      overflowY: 'scroll',
+      cursor: 'disabled',
+      opacity: '0.5',
+    },
   })
 );
 
@@ -30,15 +37,17 @@ function ReviewsList({
   reviews,
   addReview,
   editReview,
+  disabled,
 }: {
   reviews: Review[];
   addReview: (review: Review) => void;
   editReview: (review: Review) => void;
+  disabled: boolean;
 }) {
   const classes = useStyles();
   const lastIndex = reviews.length - 1;
   return (
-    <Card className={classes.card}>
+    <Card className={disabled ? classes.disabled : classes.card}>
       <CardHeader title={`Reviews (${reviews.length})`}>
         <Divider variant="middle" component="li" />
       </CardHeader>
@@ -47,16 +56,21 @@ function ReviewsList({
           {reviews.map((review, index) =>
             index !== lastIndex ? (
               <div key={review._id}>
-                <ReviewItem onEditSuccess={editReview} review={review} />
+                <ReviewItem disabled={disabled} onEditSuccess={editReview} review={review} />
                 <Divider variant="middle" component="li" />
               </div>
             ) : (
-              <ReviewItem onEditSuccess={editReview} key={review._id} review={review} />
+              <ReviewItem
+                disabled={disabled}
+                onEditSuccess={editReview}
+                key={review._id}
+                review={review}
+              />
             )
           )}
         </List>
       </CardContent>
-      <ReviewForm onSuccess={addReview} />
+      <ReviewForm disabled={disabled} onSuccess={addReview} />
     </Card>
   );
 }

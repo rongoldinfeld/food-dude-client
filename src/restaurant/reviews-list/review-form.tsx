@@ -13,7 +13,7 @@ import { useParams } from 'react-router-dom';
 import { Review } from '../../models/review.model';
 import { apiInstance } from '../../shared/utils/http-client';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     form: {
       display: 'flex',
@@ -24,7 +24,13 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function ReviewForm({ onSuccess }: { onSuccess: (review: Review) => void }) {
+export default function ReviewForm({
+  onSuccess,
+  disabled,
+}: {
+  onSuccess: (review: Review) => void;
+  disabled: boolean;
+}) {
   const { id } = useParams<{ id: string }>();
   const [review, setReview] = useState('');
   const [error, setError] = useState(false);
@@ -46,9 +52,7 @@ export default function ReviewForm({ onSuccess }: { onSuccess: (review: Review) 
         setError(false);
         setReview('');
       })
-      .catch((err) => {
-        setError(true);
-      });
+      .catch(() => setError(true));
   };
 
   return (
@@ -56,6 +60,7 @@ export default function ReviewForm({ onSuccess }: { onSuccess: (review: Review) 
       <Grid item>
         <FormControl variant="outlined">
           <TextField
+            disabled={disabled}
             id="outlined-textarea"
             label="Write your review here"
             placeholder="What you think about the restaurant?"
@@ -67,7 +72,7 @@ export default function ReviewForm({ onSuccess }: { onSuccess: (review: Review) 
         </FormControl>
       </Grid>
       <Grid item>
-        <Button onClick={handleSubmit} variant="contained">
+        <Button onClick={handleSubmit} variant="contained" disabled={disabled}>
           Submit
         </Button>
       </Grid>

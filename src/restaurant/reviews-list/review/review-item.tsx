@@ -23,9 +23,11 @@ import { apiInstance } from '../../../shared/utils/http-client';
 export default function ReviewItem({
   review,
   onEditSuccess,
+  disabled,
 }: {
   review: Review;
   onEditSuccess: (edit: Review) => void;
+  disabled: boolean;
 }) {
   const authContext = useContext(UserContext);
   const [open, setOpen] = useState(false);
@@ -53,9 +55,7 @@ export default function ReviewItem({
         setError(false);
         handleClose();
       })
-      .catch((err) => {
-        setError(true);
-      });
+      .catch(() => setError(true));
   };
 
   const useStyles = makeStyles(() => ({
@@ -88,22 +88,22 @@ export default function ReviewItem({
   return (
     <ListItem alignItems="flex-start">
       <ListItemAvatar>
-        <Avatar>{review.user.slice(0, 1)}</Avatar>
+        <Avatar>{review.user.firstName.slice(0, 1)}</Avatar>
       </ListItemAvatar>
       <ListItemText
         primary={
           <Grid container direction="row" justify="space-between" alignItems="center">
             <Grid item>
               <Typography component="span" color="textPrimary">
-                {`${review.user} - `}
+                {`${review.user.firstName} ${review.user.lastName} - `}
               </Typography>
               <Typography component="span" color="textSecondary">
                 {moment(review.updatedAt).format(longDateFormat)}
               </Typography>
             </Grid>
             <Grid item>
-              {authContext.user && authContext.user._id === review.user && (
-                <Tooltip title="Edit your comment!" className={classes.editIcon}>
+              {authContext.user && authContext.user._id === review.user._id && !disabled && (
+                <Tooltip title="Edit your comment" className={classes.editIcon}>
                   <EditOutlinedIcon onClick={handleOpen} />
                 </Tooltip>
               )}
@@ -142,6 +142,7 @@ export default function ReviewItem({
                 />
               </form>
               <Button
+                disabled={disabled}
                 type="button"
                 variant="contained"
                 color="primary"

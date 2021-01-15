@@ -52,16 +52,20 @@ export default function CategoryFilter({
   return (
     <Autocomplete
       style={{ width: '100%' }}
-      id="asynchronous-demo"
       open={open}
-      onOpen={() => {
-        setOpen(true);
-      }}
-      onClose={() => {
-        setOpen(false);
-      }}
+      onOpen={() => setOpen(true)}
+      onClose={() => setOpen(false)}
       onChange={(event, value) => onCategoryChange(value ? value.name : '')}
-      getOptionSelected={(option) => option.name === value}
+      getOptionSelected={(option) => {
+          // if(option.name === value) {
+          //     // debugger;
+          //     console.log(`option ${option.name} was comapred to ${value} and was matched`)
+          //     return true;
+          // } else {
+          //     return false;
+          // }
+          return option.name === value;
+      }}
       getOptionLabel={(option) => option.name}
       options={options}
       loading={loading}
