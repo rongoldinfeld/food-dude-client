@@ -4,8 +4,7 @@ import {
   FormControl,
   Grid,
   makeStyles,
-  TextField,
-  Theme,
+  TextField
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import React, { useState } from 'react';
