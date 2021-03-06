@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
 export default function AutoCompleteSearchInput({ disabled }: { disabled: boolean }) {
   const classes = useStyles();
   const history = useHistory();
-  const [value, setValue] = useState<Restaurant | null>(null);
+  const [value] = useState<Restaurant | null>(null);
   const [inputValue, setInputValue] = useState('');
   const [options, setOptions] = useState<Restaurant[]>([]);
 

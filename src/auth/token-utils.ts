@@ -2,6 +2,10 @@ import { decode } from 'jsonwebtoken';
 import moment from 'moment';
 import { User } from '../models/user.model';
 
+export const getToken = (): string => {
+  return localStorage.getItem('token') || '';
+};
+
 export const getTokenAndExpiery = (): { token: string | null; expiryDate: string | null } => ({
   token: localStorage.getItem('token'),
   expiryDate: localStorage.getItem('expireDate'),

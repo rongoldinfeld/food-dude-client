@@ -4,13 +4,21 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import Rating from '@material-ui/lab/Rating';
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Restaurant } from '../models/restaurant.model';
 import { Review } from '../models/review.model';
 import { useFetch } from '../shared/utils/fetch-hook';
 import { apiInstance } from '../shared/utils/http-client';
 import ReviewsList from './reviews-list/reviews-list';
+import {
+  closeConnection,
+  createSocket,
+  listenToBlockReviewChange,
+  sendTestMessage,
+} from '../shared/utils/socket-client';
+import { getToken } from '../auth/token-utils';
+import { UserContext } from '../providers/user-provider';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,6 +35,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Resturant() {
   const { id } = useParams<{ id: string }>();
+  const authContext = useContext(UserContext);
+
   const classes = useStyles();
 
   async function fetchRestaurant(restaurantId: string): Promise<Restaurant> {
@@ -43,7 +53,19 @@ export default function Resturant() {
     request: fetchRestaurantCallback,
   });
 
+  useEffect(() => {
+    if (data._id && authContext.socket) {
+      listenToBlockReviewChange(authContext.socket, data._id, ({ reviewsBlocked }) =>
+        setData({
+          ...data,
+          reviewsBlocked,
+        })
+      );
+    }
+  }, [data]);
+
   const addReview = (review: Review) => setData({ ...data, reviews: [...data.reviews, review] });
+
   const editReview = (review: Review) =>
     setData({
       ...data,
@@ -77,7 +99,12 @@ export default function Resturant() {
                 <Typography variant="body2" color="textSecondary">
                   <Rating name="read-only" value={data.rating} readOnly />
                 </Typography>
-                <ReviewsList disabled={data.reviewsBlocked} editReview={editReview} reviews={data.reviews} addReview={addReview} />
+                <ReviewsList
+                  disabled={data.reviewsBlocked}
+                  editReview={editReview}
+                  reviews={data.reviews}
+                  addReview={addReview}
+                />
               </Grid>
             </Grid>
           </Grid>
